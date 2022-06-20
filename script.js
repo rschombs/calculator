@@ -30,6 +30,10 @@ function operator (operator, a, b) {
     }
 }
 
+function playAudio(url) {
+    new Audio(url).play();
+}
+
 let working = 0;
 let operation = "null";
 let displayBar = document.querySelector(".display");
@@ -56,8 +60,20 @@ allClear.addEventListener('click', () => {
     displayBar.textContent = "0";
 });
 
+const clickable = document.querySelectorAll('.button');
+
+clickable.forEach(target => target.addEventListener('click', () => {
+    playAudio("click.wav");
+    target.classList.add('tapped');
+}));
+clickable.forEach(target => target.addEventListener('transitionend', removeTransition));
+
+function removeTransition(e) {
+  this.classList.remove('tapped');
+}
+
 const btn1 = document.querySelector('#one');
-btn1.addEventListener('click', () => {
+btn1.addEventListener('click', () => { 
     if (displayBar.textContent == "0" || triggered == "yes") {
         displayBar.textContent = "1";
         working = 1;

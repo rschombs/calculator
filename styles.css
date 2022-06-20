@@ -42,12 +42,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition:all .1s;
     font-size: 26px;
     height: 65px;
     width: 75px;
     border-style: solid;
     border-radius: .2cm;
     border-color: black;
+}
+
+.tapped{
+    transform: scale(1.1);
 }
 
 #add, #subtract, #multiply, #divide {
