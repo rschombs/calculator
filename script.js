@@ -63,8 +63,12 @@ allClear.addEventListener('click', () => {
 const clickable = document.querySelectorAll('.button');
 
 clickable.forEach(target => target.addEventListener('click', () => {
+    if (target.id == "beagle") {
+        playAudio("bark.mp3");
+    } else {
     playAudio("click.wav");
     target.classList.add('tapped');
+    }
 }));
 clickable.forEach(target => target.addEventListener('transitionend', removeTransition));
 
