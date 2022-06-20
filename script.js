@@ -253,3 +253,8 @@ deleter.addEventListener('click', () => {
     working = +displayBar.textContent;
     }
 });
+
+const question = document.querySelector("#beagle");
+question.addEventListener('click', () => {
+    displayBar.textContent = "Beagle!";
+});
