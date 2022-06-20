@@ -14,14 +14,21 @@ body {
     border-radius: 1cm;
     border-color: black;
     justify-content: space-evenly;
+    background-color: grey;
 }
 .display {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    font-size: 80px;
+    padding-right: 15px;
     height: 125px;
-    width: 360px;
+    width: 350px;
     margin: 16px;
     border-style: solid;
     border-radius: .2cm;
     border-color: black;
+    background-color: lightgoldenrodyellow;
 }
 
 #row1 {
@@ -41,4 +48,24 @@ body {
     border-style: solid;
     border-radius: .2cm;
     border-color: black;
+}
+
+#add, #subtract, #multiply, #divide {
+    background-color: lightcoral;
+}
+
+#zero, #one, #two, #three, #four, #five, #six, #seven, #eight, #nine {
+    background-color: whitesmoke;
+}
+
+#equals {
+    background-color: lightgreen;
+}
+
+#plusMinus, #decimal {
+    background-color: aquamarine;
+}
+
+#clear, #backspace, #blank {
+    background-color: violet;
 }
