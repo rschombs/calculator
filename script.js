@@ -2,7 +2,7 @@ function add(a,b) {
     return a + b;
 }
 
-function substract(a,b) {
+function subtract(a,b) {
     return a - b;
 }
 
@@ -12,4 +12,17 @@ function multiply(a,b) {
 
 function divide(a,b) {
     return a/b;
+}
+
+function operator (operator, a, b) {
+    switch (operator) {
+        case add:
+            return add(a,b);
+        case subtract:
+            return subtract(a,b);
+        case multiply:
+            return multiply(a,b);
+        case divide:
+            return divide(a,b);
+    }
 }
