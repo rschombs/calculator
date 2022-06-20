@@ -329,7 +329,8 @@ question.addEventListener('click', () => {
 
 const point = document.querySelector('#decimal');
 point.addEventListener('click', () => {
-    if (displayBar.textContent == "0" || triggered == "yes") {
+    if (displayBar.textContent.includes(".")) {return;
+    } else if (displayBar.textContent == "0" || triggered == "yes") {
         displayBar.textContent = "0.";
         working = 0;
         triggered = "no";
