@@ -1,17 +1,17 @@
 function add(a,b) {
-    return a + b;
+    return Math.round(10000000*(a + b))/10000000;
 }
 
 function subtract(a,b) {
-    return a - b;
+    return Math.round(10000000*(a - b))/10000000;
 }
 
 function multiply(a,b) {
-    return a * b;
+    return Math.round(10000000*a * b)/10000000;
 }
 
 function divide(a,b) {
-    return a/b;
+    return Math.round(10000000*a/b)/10000000;
 }
 
 function operator (operator, a, b) {
@@ -23,7 +23,10 @@ function operator (operator, a, b) {
         case "multiply":
             return multiply(a,b);
         case "divide":
-            return divide(a,b);
+            if (working == 0) {
+                return "ERROR";
+                internalReset();
+            } else return divide(a,b);
     }
 }
 
@@ -32,7 +35,7 @@ let operation = "null";
 let displayBar = document.querySelector(".display");
 let result = 0;
 let triggered = "no";
-let mem = "nil";
+let mem = "nah";
 displayBar.textContent = "0";
 
 function internalReset() {
@@ -40,7 +43,7 @@ function internalReset() {
     operation = "null";
     result = 0;
     triggered = "yes";
-    mem = "nil";
+    mem = "nah";
 }
 
 const allClear = document.querySelector('#clear');
@@ -49,7 +52,7 @@ allClear.addEventListener('click', () => {
     operation = "null";
     result = 0;
     triggered = "no";
-    mem = "nil";
+    mem = "nah";
     displayBar.textContent = "0";
 });
 
@@ -168,14 +171,13 @@ btn0.addEventListener('click', () => {
         working = 0;
         triggered = "no";
     } else if (displayBar.textContent.length == 8) {
-    } else { displayBar.textContent = displayBar.textContent + "0";
-        working = +displayBar.textContent;
-}
+        } else { displayBar.textContent = displayBar.textContent + "0";
+            working = +displayBar.textContent;}
 });
 
 const addButton = document.querySelector("#add");
 addButton.addEventListener('click', () => {
-    if (mem != "nil") {
+    if (mem != "nil" && mem != "nah") {
         result = operator(operation, mem, working);
         if (result > 99999999) {
             displayBar.textContent = "99999999";
@@ -192,7 +194,7 @@ addButton.addEventListener('click', () => {
 
 const subtractButton = document.querySelector("#subtract");
 subtractButton.addEventListener('click', () => {
-    if (mem != "nil") {
+    if (mem != "nil" && mem != "nah") {
         result = operator(operation, mem, working);
         if (result > 99999999) {
             displayBar.textContent = "99999999";
@@ -209,7 +211,7 @@ subtractButton.addEventListener('click', () => {
 
 const multiplyButton = document.querySelector("#multiply");
 multiplyButton.addEventListener('click', () => {
-    if (mem != "nil") {
+    if (mem != "nil" && mem != "nah") {
         result = operator(operation, mem, working);
         if (result > 99999999) {
             displayBar.textContent = "99999999";
@@ -226,11 +228,8 @@ multiplyButton.addEventListener('click', () => {
 
 const divideButton = document.querySelector("#divide");
 divideButton.addEventListener('click', () => {
-    if (mem == 0) {
-        displayBar.textContent = "ERROR";
-        internalReset();
-    }
-    if (mem != "nil") {
+  
+    if (mem != "nil" && mem != "nah") {
         result = operator(operation, mem, working);
         if (result > 99999999) {
             displayBar.textContent = "99999999";
@@ -248,17 +247,21 @@ divideButton.addEventListener('click', () => {
 const equals = document.querySelector("#equals");
 equals.addEventListener('click', () => {
     if (operation != "null") {
-    if (mem != "nil") {
-    result = operator(operation, mem, working);
-    if (result > 99999999) {
-        displayBar.textContent = "99999999";
-    } else {
-    displayBar.textContent = +result;
-    triggered = "yes";
-    working = result;
-    mem = "nil";
-    }
-    }
+        if (mem != "nil") {
+            result = operator(operation, mem, working);
+            if (result == "ERROR") {
+                displayBar.textContent = "ERROR";
+                internalReset();
+            } else if (result > 99999999) {
+                displayBar.textContent = "99999999";
+                }
+             else {
+                displayBar.textContent = +result;
+                triggered = "yes";
+                working = result;
+                mem = "nil";
+            }
+        }
     }
 });
 
@@ -272,7 +275,7 @@ const deleter = document.querySelector("#backspace");
 deleter.addEventListener('click', () => {
     if (mem !="nil") {displayBar.textContent = displayBar.textContent.slice(0,-1);
     if (displayBar.textContent == "") {
-        displayBar.textContent = 0;
+        displayBar.textContent = "0";
     }
     working = +displayBar.textContent;
     }
@@ -302,4 +305,16 @@ question.addEventListener('click', () => {
             internalReset();
     }
     
+});
+
+const point = document.querySelector('#decimal');
+point.addEventListener('click', () => {
+    if (displayBar.textContent == "0" || triggered == "yes") {
+        displayBar.textContent = "0.";
+        working = 0;
+        triggered = "no";
+    } else if (displayBar.textContent.length == 8) {
+    } else { displayBar.textContent = displayBar.textContent + ".";
+        working = +displayBar.textContent;
+}
 });
