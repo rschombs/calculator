@@ -35,6 +35,14 @@ let triggered = "no";
 let mem = "nil";
 displayBar.textContent = "0";
 
+function internalReset() {
+    working = 0;
+    operation = "null";
+    result = 0;
+    triggered = "yes";
+    mem = "nil";
+}
+
 const allClear = document.querySelector('#clear');
 allClear.addEventListener('click', () => {
     working = 0;
@@ -153,10 +161,22 @@ btn9.addEventListener('click', () => {
 }
 });
 
+const btn0 = document.querySelector('#zero');
+btn0.addEventListener('click', () => {
+    if (displayBar.textContent == "0" || triggered == "yes") {
+        displayBar.textContent = "0";
+        working = 0;
+        triggered = "no";
+    } else if (displayBar.textContent.length == 8) {
+    } else { displayBar.textContent = displayBar.textContent + "0";
+        working = +displayBar.textContent;
+}
+});
+
 const addButton = document.querySelector("#add");
 addButton.addEventListener('click', () => {
     if (mem != "nil") {
-        result = operator("add", mem, working);
+        result = operator(operation, mem, working);
         if (result > 99999999) {
             displayBar.textContent = "99999999";
         } else {
@@ -173,7 +193,7 @@ addButton.addEventListener('click', () => {
 const subtractButton = document.querySelector("#subtract");
 subtractButton.addEventListener('click', () => {
     if (mem != "nil") {
-        result = operator("subtract", mem, working);
+        result = operator(operation, mem, working);
         if (result > 99999999) {
             displayBar.textContent = "99999999";
         } else {
@@ -190,7 +210,7 @@ subtractButton.addEventListener('click', () => {
 const multiplyButton = document.querySelector("#multiply");
 multiplyButton.addEventListener('click', () => {
     if (mem != "nil") {
-        result = operator("multiply", mem, working);
+        result = operator(operation, mem, working);
         if (result > 99999999) {
             displayBar.textContent = "99999999";
         } else {
@@ -206,8 +226,12 @@ multiplyButton.addEventListener('click', () => {
 
 const divideButton = document.querySelector("#divide");
 divideButton.addEventListener('click', () => {
+    if (mem == 0) {
+        displayBar.textContent = "ERROR";
+        internalReset();
+    }
     if (mem != "nil") {
-        result = operator("divide", mem, working);
+        result = operator(operation, mem, working);
         if (result > 99999999) {
             displayBar.textContent = "99999999";
         } else {
@@ -256,5 +280,26 @@ deleter.addEventListener('click', () => {
 
 const question = document.querySelector("#beagle");
 question.addEventListener('click', () => {
-    displayBar.textContent = "Beagle!";
+    switch (displayBar.textContent) {
+        case "Beagle!":
+            displayBar.textContent = "Pibb";
+            internalReset();
+            break;
+        case "Pibb":
+            displayBar.textContent = "smellz";
+            internalReset();
+            break;
+        case "smellz":
+            displayBar.textContent = "with a z";
+            internalReset();
+            break;
+        case "with a z":
+            internalReset();
+            displayBar.textContent = "0";
+            break;
+        default:
+            displayBar.textContent = "Beagle!";
+            internalReset();
+    }
+    
 });
